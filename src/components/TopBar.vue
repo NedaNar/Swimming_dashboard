@@ -3,7 +3,7 @@
     <v-row class="top" align="center" style="height: 90px" no-gutters>
       <v-col cols="1">
         <v-img
-          src="./src/components/images/Championships_logo.png"
+          :src="competitionInfo.logoUrl"
           alt="Logo"
           max-height="55"
           max-width="110"
@@ -11,23 +11,26 @@
         />
       </v-col>
       <v-col cols="8">
-        <v-toolbar-title
-          >World Aquatics Championships - Fukuoka 2023</v-toolbar-title
-        ></v-col
-      >
+        <v-toolbar-title>{{ competitionInfo.title }}</v-toolbar-title>
+      </v-col>
       <v-col cols="3">
         <div class="text-right-container">
           <p>
-            <v-img
-              src="./src/components/images/Japan.png"
-              alt="Logo"
-              class="japan-image"
-            />
+            <v-img :src="flagUrl" alt="Logo" class="japan-image" />
           </p>
 
           <div class="text-right-content">
-            <p class="font-weight-bold">JPN Japan Fukuoka</p>
-            <p :style="{ color: '#515151' }">Long Course (50 m)</p>
+            <p class="font-weight-bold">
+              {{ competitionInfo.countryCode }} {{ competitionInfo.location }}
+            </p>
+            <p :style="{ color: '#515151' }">
+              {{
+                competitionInfo.poolLength == 50
+                  ? "Long course"
+                  : "Short course"
+              }}
+              ({{ competitionInfo.poolLength }}m)
+            </p>
           </div>
         </div>
       </v-col>
@@ -36,7 +39,30 @@
 </template>
 
 <script>
-export default {};
+import { useInfoStore } from "@/stores/info";
+
+export default {
+  data() {
+    return {
+      infoStore: useInfoStore(),
+      flagUrl: "",
+    };
+  },
+  computed: {
+    competitionInfo() {
+      let info = this.infoStore.getCompetitionInfo;
+      this.flagUrl = info.countryCode
+        ? "https://www.worldaquatics.com/resources/v2.9.0/i/elements/flags/" +
+          info.countryCode.toLowerCase() +
+          ".png"
+        : "";
+      return info;
+    },
+  },
+  created() {
+    this.infoStore.fetchCompetitionInfo();
+  },
+};
 </script>
 
 <style>

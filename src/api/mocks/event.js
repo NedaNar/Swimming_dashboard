@@ -81,8 +81,13 @@ export default {
       pb: "00.53.02",
     },
   ],
-  eventName: "Women 100 Freestyle",
-  eventType: "Finals",
-  record: "00.51.71",
-  recordDetails: "Sarah Sjöström, 2015",
+  event: {
+    title: "Women 100 Freestyle",
+    type: "Finals",
+    recordTime: [
+      { distance: 50, time: "00:24:83" },
+      { distance: 100, time: "00:51:71" },
+    ],
+    recordDetails: "Sarah Sjöström, 2015",
+  },
 };

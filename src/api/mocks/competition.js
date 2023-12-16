@@ -1,14 +1,14 @@
 export default {
-  title_url: "",
+  logoUrl: "./src/components/images/Championships_logo.png",
   title: "World Aquatics Championships - Fukuoka 2023",
-  location_url: "",
-  location: "JPN Japan Fukuoka",
-  pool: "Long Course (50m)",
+  countryCode: "JPN",
+  location: "Japan Fukuoka",
+  poolLength: 50,
   schedule: [
-    "Men 800 Freestyle",
-    "Women 200 Medley",
-    "Men 50 Breastroke",
-    "Women 100 Freestyle",
-    "Men 4x100 Freestyle",
+    { title: "Men 800 Freestyle", time: "18:00" },
+    { title: "Women 200 Medley", time: "18:15" },
+    { title: "Men 50 Breaststroke", time: "18:30" },
+    { title: "Women 100 Freestyle", time: "19:00" },
+    { title: "Men 4x100 Freestyle", time: "19:45" },
   ],
 };

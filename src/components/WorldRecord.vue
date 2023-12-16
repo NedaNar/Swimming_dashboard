@@ -10,33 +10,36 @@
         <p :style="{ 'font-size': '16px' }" class="font-weight-bold">
           WORLD RECORD
         </p>
-        <p>Woman 100 freestyle</p>
+        <p>{{ event.title }}</p>
       </div>
     </v-row>
     <v-row no-gutters>
       <p class="time-text">
-        <span :style="{ 'font-size': '16px' }" class="font-weight-bold"
-          >{{ worldRecord.time }}
+        <span
+          v-if="event.recordTime != null"
+          :style="{ 'font-size': '16px' }"
+          class="font-weight-bold"
+          >{{ event.recordTime[event.recordTime.length - 1].time }}
         </span>
-        {{ worldRecord.person }}, {{ worldRecord.year }}
+        {{ event.recordDetails }}
       </p>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import { useInfoStore } from "@/stores/info";
+
 export default {
   data() {
     return {
-      worldRecord: null,
+      infoStore: useInfoStore(),
     };
   },
-  created() {
-    this.worldRecord = {
-      time: "00.51.71",
-      person: "Sarah Sjöström",
-      year: "2015",
-    };
+  computed: {
+    event() {
+      return this.infoStore.getEvent;
+    },
   },
 };
 </script>

@@ -30,18 +30,8 @@ export default {
   },
   created() {
     this.fetchEvent();
-    this.fetchResults();
-    setInterval(this.fetchResults, 1000);
   },
   methods: {
-    fetchResults() {
-      try {
-        this.resultStore.fetchLiveResults(this.currentSecond);
-        this.currentSecond += 1;
-      } catch (error) {
-        alert("We are having trouble getting live results" + error);
-      }
-    },
     fetchEvent() {
       try {
         this.infoStore.fetchEvent();

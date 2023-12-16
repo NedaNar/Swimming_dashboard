@@ -1,9 +1,13 @@
 import fetchMock from "fetch-mock";
 import liveResults from "./mocks/liveResults";
 import event from "./mocks/event";
+import competition from "./mocks/competition";
+import countries from "./mocks/countries";
 
 fetchMock.mock("https://api.swimming.io/liveResults", liveResults);
 fetchMock.mock("https://api.swimming.io/event", event);
+fetchMock.mock("https://api.swimming.io/competition", competition);
+fetchMock.mock("https://api.swimming.io/countries", countries);
 
 export async function get(apiBaseUrl, endpoint) {
   try {

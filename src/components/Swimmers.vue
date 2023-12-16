@@ -89,6 +89,9 @@ export default {
       return this.infoStore.getSwimmers;
     },
   },
+  created () {
+    this.infoStore.fetchSwimmers();
+  },
 };
 </script>
 

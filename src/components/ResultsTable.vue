@@ -93,7 +93,6 @@ export default {
   computed: {
     results() {
       this.distance = this.resultStore.getCompletedDistance;
-      console.log(this.distance);
       return this.resultStore.getResults;
     },
   },

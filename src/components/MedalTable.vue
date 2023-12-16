@@ -18,22 +18,26 @@
       no-gutters
       align="center"
       class="countryRow"
-      v-for="country in topMedalCountries"
-      :key="country.counry"
+      v-for="country in topCountries"
+      :key="country.name"
     >
       <v-col cols="1" class="mr-2">
-        <v-img class="flag" :src="country.flag" max-width="24"></v-img>
+        <v-img
+          class="flag"
+          :src="getFlagUrl(country.countryCode)"
+          max-width="24"
+        ></v-img>
       </v-col>
       <v-col cols="10">
         <v-row no-gutters>
           <p class="countryName" :style="{ 'line-height': '16px' }">
-            {{ country.counry }}
+            {{ country.name }}
           </p></v-row
         >
         <v-row align="center" no-gutters>
           <v-col cols="11"
             ><v-progress-linear
-              :max="maxMedals"
+              :max="topCountries[0].medals"
               rounded-bar
               :model-value="country.medals"
               height="12"
@@ -52,44 +56,40 @@
 </template>
 
 <script>
+import { useInfoStore } from "@/stores/info";
+
 export default {
   data() {
     return {
-      topMedalCountries: [
-        {
-          counry: "United States of America",
-          flag: "https://www.worldaquatics.com/resources/v2.9.0/i/elements/flags/usa.png",
-          medals: 34,
-        },
-        {
-          counry: "Australia",
-          flag: "https://www.worldaquatics.com/resources/v2.9.0/i/elements/flags/aus.png",
-          medals: 20,
-        },
-        {
-          counry: "China",
-          flag: "https://www.worldaquatics.com/resources/v2.9.0/i/elements/flags/chn.png",
-          medals: 18,
-        },
-        {
-          counry: "Japan",
-          flag: "https://www.worldaquatics.com/resources/v2.9.0/i/elements/flags/jpn.png",
-          medals: 11,
-        },
-        {
-          counry: "Great Britain",
-          flag: "https://www.worldaquatics.com/resources/v2.9.0/i/elements/flags/gbr.png",
-          medals: 8,
-        },
-      ],
-      maxMedals: 0,
+      infoStore: useInfoStore(),
     };
   },
-  mounted() {
-    this.maxMedals = Math.max(
-      ...this.topMedalCountries.map((country) => country.medals)
-    );
-    this.maxMedals += this.maxMedals / 10;
+  created() {
+    this.fetchCountries();
+    setInterval(() => {
+      this.fetchCountries();
+    }, 1000);
+  },
+  computed: {
+    topCountries() {
+      return this.infoStore.getTopCountries;
+    },
+  },
+  methods: {
+    fetchCountries() {
+      try {
+        this.infoStore.fetchCountries();
+      } catch (error) {
+        alert("Error getting country info" + error);
+      }
+    },
+    getFlagUrl(countryCode) {
+      return (
+        "https://www.worldaquatics.com/resources/v2.9.0/i/elements/flags/" +
+        countryCode.toLowerCase() +
+        ".png"
+      );
+    },
   },
 };
 </script>

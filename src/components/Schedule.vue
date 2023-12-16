@@ -10,23 +10,35 @@
         <p :style="{ 'font-size': '16px' }" class="font-weight-bold">
           TODAY'S SCHEDULE
         </p>
-        <p>01 Nov 2023</p>
+        <p>{{ formattedDate }}</p>
       </div>
     </v-row>
 
     <v-row>
       <v-table class="schedule-table" density="compact">
         <tbody>
-          <tr v-for="event in events" :key="event.name">
+          <tr v-for="event in schedule" :key="event">
             <td class="tableRow">
               <v-row no-gutters>
                 <v-img
-                  v-if="event.state == 'current'"
+                  v-if="event.title == currentEvent"
                   class="now"
                   src="src/components/images/now.png"
                 >
                 </v-img>
-                <p :style="getEventTextStyle(event)">{{ event.name }}</p>
+                <p>
+                  <span
+                    v-if="event.state == 'ongoing'"
+                    :style="{ fontWeight: 'bold' }"
+                    >{{ event.title }}</span
+                  >
+                  <span
+                    v-else-if="event.state == 'finished'"
+                    :style="{ color: '#515151' }"
+                    >{{ event.time }} {{ event.title }}</span
+                  >
+                  <span v-else>{{ event.time }} {{ event.title }}</span>
+                </p>
               </v-row>
             </td>
           </tr>
@@ -37,28 +49,75 @@
 </template>
 
 <script>
+import { useInfoStore } from "@/stores/info";
+
 export default {
   data() {
     return {
-      events: [],
+      infoStore: useInfoStore(),
+      formattedDate: "",
+      currentEventFound: false,
+      oldSchedule: [],
     };
   },
   created() {
-    this.events = [
-      { name: "Men 800 Freestyle", state: "finished" },
-      { name: "Woman 200 Medley", state: "finished" },
-      { name: "Men 50 Breastroke", state: "finished" },
-      { name: "Woman 100 Freestyle", state: "current" },
-      { name: "Men 400 Freestyle", state: "scheduled" },
-    ];
+    this.fetchCompetitionInfo();
+
+    this.updateFormattedDate();
+    setInterval(() => {
+      this.updateFormattedDate();
+    }, 1000 * 60 * 60);
+  },
+  computed: {
+    currentEvent() {
+      return this.infoStore.getEvent.title;
+    },
+    schedule() {
+      const { schedule } = this.infoStore.getCompetitionInfo;
+
+      if (!schedule || this.currentEventFound) {
+        return this.oldSchedule;
+      }
+
+      const newSchedule = schedule.map((event) => {
+        if (event.title === this.currentEvent) {
+          this.currentEventFound = true;
+          event.state = "ongoing";
+        } else {
+          event.state = this.currentEventFound ? "upcoming" : "finished";
+        }
+
+        return event;
+      });
+
+      this.oldSchedule = newSchedule;
+      return newSchedule;
+    },
+  },
+  watch: {
+    currentEvent() {
+      this.currentEventFound = false;
+    },
   },
   methods: {
-    getEventTextStyle(event) {
-      if (event.state === "current") {
-        return { fontWeight: "bold" };
-      } else if (event.state === "finished") {
-        return { color: "#515151" };
+    fetchCompetitionInfo() {
+      try {
+        this.infoStore.fetchCompetitionInfo();
+      } catch (error) {
+        alert("We are having trouble getting event details" + error);
       }
+    },
+    fetchEvent() {
+      try {
+        this.infoStore.fetchEvent();
+      } catch (error) {
+        alert("We are having trouble getting event details" + error);
+      }
+    },
+    updateFormattedDate() {
+      const today = new Date();
+      const options = { day: "2-digit", month: "short", year: "numeric" };
+      this.formattedDate = today.toLocaleDateString("en-US", options);
     },
   },
 };
@@ -85,5 +144,8 @@ export default {
 .tableRow {
   padding: 12px 0px 8px 0px !important;
   margin: 0px !important;
+}
+.red-text {
+  color: #ff0000 !important;
 }
 </style>
