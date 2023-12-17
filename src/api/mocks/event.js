@@ -90,4 +90,14 @@ export default {
     ],
     recordDetails: "Sarah Sjöström, 2015",
   },
+  finalResults: [
+    { name: "Mollie O'CALLAGHAN", place: 1, time: "00:52:16" },
+    { name: "Siobhan BERNADETTE", place: 2, time: "00:52:45" },
+    { name: "Marrit STEENBERGEN", place: 3, time: "00:53:87" },
+    { name: "Kate DOUGLASS", place: 4, time: "00:54:08" },
+    { name: "Emma MCKEON", place: 5, time: "00:54:69" },
+    { name: "Abbey WEITZEL", place: 6, time: "00:55:45" },
+    { name: "Michelle COLEMAN", place: 7, time: "00:57:37" },
+    { name: "Junxuan YANG", place: 8, time: "01:00:87" },
+  ],
 };

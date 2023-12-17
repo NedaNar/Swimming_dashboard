@@ -24,19 +24,19 @@
         <v-table class="table ml-2">
           <tbody>
             <tr v-for="lane in lanes" :key="lane" class="table-row">
-              <td class="table-cell text-left">{{ lane }}</td>
+              <td class="table-cell no-borders text-left">{{ lane }}</td>
             </tr>
           </tbody>
         </v-table>
       </v-col>
-      <v-col style="flex: 0 0 682px">
+      <v-col>
         <SwimmingPool />
       </v-col>
       <v-col cols="1">
         <v-table class="table">
           <tbody>
             <tr v-for="result in results" :key="result" class="table-row">
-              <td class="table-cell">
+              <td class="table-cell no-borders">
                 {{
                   result != null
                     ? result.time != null && result.distance == distance
@@ -53,7 +53,7 @@
         <v-table class="table">
           <tbody>
             <tr v-for="result in results" :key="result" class="table-row">
-              <td class="table-cell">
+              <td class="table-cell no-borders">
                 {{
                   result != null
                     ? result.place != null && result.distance == distance
@@ -110,8 +110,10 @@ export default {
   font-size: 16px;
   color: black;
   text-align: center;
-  border: none !important;
-  padding: 0px !important;
   height: 48px !important;
+}
+.no-borders {
+  padding: 0px !important;
+  border: none !important;
 }
 </style>

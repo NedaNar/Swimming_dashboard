@@ -8,7 +8,7 @@
       />
       <div>
         <p :style="{ 'font-size': '16px' }" class="font-weight-bold">
-          TODAY'S SCHEDULE
+          SCHEDULE
         </p>
         <p>{{ formattedDate }}</p>
       </div>
@@ -30,14 +30,16 @@
                   <span
                     v-if="event.state == 'ongoing'"
                     :style="{ fontWeight: 'bold' }"
-                    >{{ event.title }}</span
+                    >{{ event.title }} - {{ event.type }}</span
                   >
                   <span
                     v-else-if="event.state == 'finished'"
                     :style="{ color: '#515151' }"
-                    >{{ event.time }} {{ event.title }}</span
+                    >{{ event.time }} {{ event.title }} - {{ event.type }}</span
                   >
-                  <span v-else>{{ event.time }} {{ event.title }}</span>
+                  <span v-else
+                    >{{ event.time }} {{ event.title }} - {{ event.type }}</span
+                  >
                 </p>
               </v-row>
             </td>
@@ -133,7 +135,6 @@ export default {
   border-radius: 8px !important;
   width: 100% !important;
   padding: 0px 24px 0px 24px !important;
-  margin: 8px 40px 0px 40px !important;
 }
 
 .now {
@@ -144,8 +145,5 @@ export default {
 .tableRow {
   padding: 12px 0px 8px 0px !important;
   margin: 0px !important;
-}
-.red-text {
-  color: #ff0000 !important;
 }
 </style>

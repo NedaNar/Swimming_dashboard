@@ -173,7 +173,7 @@ export default {
   eventState: [
     ...Array(5).fill("preparing"),
     "starting",
-    ...Array(61).fill("ongoing"),
+    ...Array(62).fill("ongoing"),
     "finished",
   ],
 };

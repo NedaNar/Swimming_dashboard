@@ -11,7 +11,7 @@ export const useResultStore = defineStore("results", {
     getResults: (state) => state.liveResults,
     getEventState: (state) => state.eventState,
     getCompletedDistance: (state) => {
-      let maxDistance = -Infinity;
+      let maxDistance = 0;
 
       state.liveResults.forEach((swimmer) => {
         if (swimmer && swimmer.distance > maxDistance) {

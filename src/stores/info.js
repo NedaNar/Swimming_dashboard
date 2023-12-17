@@ -21,6 +21,7 @@ export const useInfoStore = defineStore("info", {
       { schedule: [] },
     ],
     countries: [],
+    finalResults: [],
   }),
   getters: {
     getSwimmers: (state) => state.swimmers,
@@ -36,6 +37,10 @@ export const useInfoStore = defineStore("info", {
     },
     getFlagByLane: (state) => (lane) => {
       const swimmer = state.swimmers.find((swimmer) => swimmer.lane == lane);
+      return swimmer ? swimmer.flag : "";
+    },
+    getFlagByName: (state) => (name) => {
+      const swimmer = state.swimmers.find((swimmer) => swimmer.name == name);
       return swimmer ? swimmer.flag : "";
     },
     getEvent: (state) => state.event,
@@ -77,8 +82,19 @@ export const useInfoStore = defineStore("info", {
       }
       return minutes * 60 + seconds + milliseconds / 100;
     },
+    getFinalResults: (state) => {
+      return state.finalResults;
+    },
   },
   actions: {
+    async fetchFinalResults() {
+      try {
+        const data = await api.get(SWIMMING_API_BASE_URL, "event");
+        this.finalResults = data.finalResults;
+      } catch (error) {
+        throw error;
+      }
+    },
     async fetchSwimmers() {
       try {
         const data = await api.get(SWIMMING_API_BASE_URL, "event");

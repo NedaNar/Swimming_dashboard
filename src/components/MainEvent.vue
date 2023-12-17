@@ -133,7 +133,7 @@ export default {
     },
   },
   watch: {
-    eventState(newEventState) {
+    eventState() {
       this.adjustTimer();
     },
   },
