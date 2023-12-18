@@ -26,19 +26,25 @@ export default {
       resultStore: useResultStore(),
       infoStore: useInfoStore(),
       currentSecond: 0,
+      isLargeScreen: true,
+      isMediumScreen: false,
+      isSmallScreen: false,
     };
   },
-  created() {
-    this.fetchEvent();
+  mounted() {
+    this.checkScreenSize();
+    window.addEventListener("resize", this.checkScreenSize);
   },
   methods: {
-    fetchEvent() {
-      try {
-        this.infoStore.fetchEvent();
-      } catch (error) {
-        alert("We are having trouble getting event details" + error);
-      }
+    checkScreenSize() {
+      this.isLargeScreen = window.innerWidth >= 1280;
+      this.isMediumScreen =
+        window.innerWidth >= 700 && window.innerWidth < 1280;
+      this.isSmallScreen = window.innerWidth < 700;
     },
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.checkScreenSize);
   },
 };
 </script>
@@ -46,12 +52,16 @@ export default {
 <template>
   <v-app>
     <TopBar />
-    <v-container class="main" fluid>
+    <v-container fluid class="main" v-if="isLargeScreen">
       <v-row no-gutters>
         <v-col cols="9">
-          <v-row no-gutters> <MainEvent /></v-row>
-          <v-row no-gutters> <ResultsTable /></v-row>
-          <v-row no-gutters> <Game /></v-row>
+          <v-container>
+            <v-row no-gutters>
+              <MainEvent :isSmallScreen="isSmallScreen"
+            /></v-row>
+            <v-row no-gutters> <ResultsTable /></v-row>
+            <v-row no-gutters> <Game :isSmallScreen="isSmallScreen" /></v-row
+          ></v-container>
         </v-col>
         <v-col cols="3">
           <Swimmers />
@@ -59,6 +69,46 @@ export default {
           <Schedule />
           <MedalTable /></v-col
       ></v-row>
+    </v-container>
+    <v-container fluid class="main" v-if="!isLargeScreen">
+      <v-row no-gutters>
+        <v-col cols="12">
+          <v-container fluid>
+            <v-row no-gutters>
+              <MainEvent :isSmallScreen="isSmallScreen" />
+            </v-row>
+            <v-row no-gutters>
+              <ResultsTable />
+            </v-row>
+            <v-row no-gutters>
+              <Game :isSmallScreen="isSmallScreen" />
+            </v-row>
+          </v-container>
+        </v-col>
+
+        <v-col
+          :cols="isMediumScreen ? 6 : 12"
+          style="background-color: #e0e2e3"
+        >
+          <Swimmers />
+        </v-col>
+        <v-col
+          :cols="isMediumScreen ? 6 : 12"
+          style="background-color: #8ac9e8"
+        >
+          <Schedule />
+        </v-col>
+
+        <v-col
+          :cols="isMediumScreen ? 6 : 12"
+          style="background-color: #d1e9f5"
+        >
+          <WorldRecord />
+        </v-col>
+        <v-col :cols="isMediumScreen ? 6 : 12">
+          <MedalTable />
+        </v-col>
+      </v-row>
     </v-container>
   </v-app>
 </template>
@@ -71,6 +121,7 @@ export default {
   background-color: #f5f5f5;
   margin-top: 91px;
   padding: 0px !important;
+  width: 100%;
 }
 
 .gray-text {

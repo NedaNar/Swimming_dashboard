@@ -18,28 +18,50 @@
       <v-table class="schedule-table" density="compact">
         <tbody>
           <tr v-for="event in schedule" :key="event">
+            <td class="tableRow text-center pr-3">
+              <v-img
+                v-if="event.title == currentEvent"
+                class="now"
+                style="margin: 0 auto"
+                src="src/components/images/now.png"
+              >
+              </v-img>
+              <p v-else>
+                <span
+                  v-if="event.state == 'finished'"
+                  :style="{ color: '#515151' }"
+                  >{{ event.time }}</span
+                >
+                <span v-else>{{ event.time }}</span>
+              </p>
+            </td>
+            <td class="tableRow pr-3">
+              <span
+                v-if="event.state == 'ongoing'"
+                :style="{ fontWeight: 'bold' }"
+                >{{ event.title }}</span
+              >
+              <span
+                v-else-if="event.state == 'finished'"
+                :style="{ color: '#515151' }"
+                >{{ event.title }}</span
+              >
+              <span v-else>{{ event.title }}</span>
+            </td>
             <td class="tableRow">
               <v-row no-gutters>
-                <v-img
-                  v-if="event.title == currentEvent"
-                  class="now"
-                  src="src/components/images/now.png"
-                >
-                </v-img>
                 <p>
                   <span
                     v-if="event.state == 'ongoing'"
                     :style="{ fontWeight: 'bold' }"
-                    >{{ event.title }} - {{ event.type }}</span
+                    >{{ event.type }}</span
                   >
                   <span
                     v-else-if="event.state == 'finished'"
                     :style="{ color: '#515151' }"
-                    >{{ event.time }} {{ event.title }} - {{ event.type }}</span
+                    >{{ event.type }}</span
                   >
-                  <span v-else
-                    >{{ event.time }} {{ event.title }} - {{ event.type }}</span
-                  >
+                  <span v-else>{{ event.type }}</span>
                 </p>
               </v-row>
             </td>
@@ -139,7 +161,6 @@ export default {
 
 .now {
   max-width: 24px !important;
-  margin-right: 8px;
 }
 
 .tableRow {

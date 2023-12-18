@@ -1,12 +1,11 @@
 <template>
-  <v-container :style="{ 'margin-top': '16px' }"
-    ><v-row no-gutters align="center"
-      ><v-col cols="1"></v-col>
-      <v-col cols="5">
+  <v-container :style="{ 'margin-top': '16px', 'max-width': '1020px' }"
+    ><v-row no-gutters align="center">
+      <v-col cols="6">
         <v-row no-gutters>
           <p
             :style="{
-              'font-size': '28px',
+              'font-size': isSmallScreen ? '24px' : '28px',
               color: '#004C72',
               'font-weight': 'bold',
             }"
@@ -16,21 +15,32 @@
         </v-row>
         <v-row no-gutters>
           <p
-            :style="{ 'font-size': '28px', color: '#515151' }"
+            :style="{
+              'font-size': isSmallScreen ? '24px' : '28px',
+              color: '#515151',
+            }"
             class="text-right"
           >
             {{ event.type }}
           </p>
         </v-row> </v-col
-      ><v-col cols="5">
+      ><v-col cols="6">
         <v-row no-gutters justify="end">
-          <p :style="{ 'font-size': '64px', 'line-height': '64px' }">
+          <p
+            :style="{
+              'font-size': isSmallScreen ? '48px' : '64px',
+              'line-height': isSmallScreen ? '48px' : '64px',
+            }"
+          >
             {{ time }}
           </p>
         </v-row>
         <v-row no-gutters justify="end">
           <p
-            :style="{ 'font-size': '28px', color: '#515151' }"
+            :style="{
+              'font-size': isSmallScreen ? '24px' : '28px',
+              color: '#515151',
+            }"
             class="text-right"
           >
             <span v-if="eventState == 'preparing'"
@@ -41,9 +51,10 @@
             >
             <span v-else>{{ completedDistance }} m completed</span>
           </p>
-        </v-row> </v-col
-      ><v-col cols="1"></v-col></v-row
-  ></v-container>
+        </v-row>
+      </v-col></v-row
+    ></v-container
+  >
 </template>
 
 <script>
@@ -51,6 +62,11 @@ import { useResultStore } from "@/stores/results";
 import { useInfoStore } from "@/stores/info";
 
 export default {
+  props: {
+    isSmallScreen: {
+      type: Boolean,
+    },
+  },
   data() {
     return {
       resultStore: useResultStore(),

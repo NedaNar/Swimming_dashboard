@@ -43,27 +43,37 @@
 
             <v-card-title> {{ swimmer.name }} </v-card-title>
 
-            <v-card-text :style="{ 'font-size': '16px' }">
-              <v-row no-gutters>
-                <v-col cols="7">
-                  <p :style="{ color: '#515151' }" class="mb-1">Nationality</p>
-                  <p :style="{ color: '#515151' }" class="mb-1">
-                    Date of birth
-                  </p>
-                  <p :style="{ color: '#515151' }">Personal best</p>
-                </v-col>
-                <v-col cols="5">
-                  <v-row class="mb-1" no-gutters align="center">
+            <v-card-text :style="{ 'font-size': '16rem' }">
+              <v-row no-gutters class="mb-1">
+                <v-col cols="7"
+                  ><p :style="{ color: '#515151' }">Nationality</p></v-col
+                >
+                <v-col cols="5"
+                  ><v-row no-gutters align="center">
                     <v-img
                       :src="swimmer.flag"
                       max-width="16"
                       class="mr-2"
                     ></v-img>
                     <p :style="{ color: '#000000' }">{{ swimmer.country }}</p>
-                  </v-row>
-                  <p class="mb-1" :style="{ color: '#000000' }">
+                  </v-row></v-col
+                >
+              </v-row>
+              <v-row no-gutters
+                ><v-col cols="7"
+                  ><p :style="{ color: '#515151' }">Date of birth</p></v-col
+                >
+                <v-col cols="5">
+                  <p :style="{ color: '#000000' }">
                     {{ swimmer.date }}
                   </p>
+                </v-col>
+              </v-row>
+              <v-row no-gutters>
+                <v-col cols="7">
+                  <p :style="{ color: '#515151' }">Personal best</p></v-col
+                >
+                <v-col cols="5">
                   <p :style="{ color: '#000000' }">{{ swimmer.pb }}</p>
                 </v-col>
               </v-row>
@@ -89,7 +99,7 @@ export default {
       return this.infoStore.getSwimmers;
     },
   },
-  created () {
+  created() {
     this.infoStore.fetchSwimmers();
   },
 };

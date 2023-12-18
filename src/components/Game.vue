@@ -1,8 +1,9 @@
 <template>
   <v-container class="mainContainer mt-5"
     ><v-row no-gutters
-      ><v-col cols="1"></v-col
-      ><v-col cols="4" class="textColumn"
+      ><v-col
+        :cols="!isSmallScreen ? auto : 12"
+        :class="{ 'pr-5': !isSmallScreen }"
         ><v-row no-gutters
           ><p
             class="paragraph"
@@ -32,7 +33,7 @@
         ></v-col
       >
 
-      <v-col cols="5">
+      <v-col :cols="!isSmallScreen ? auto : 12">
         <v-container class="d-flex flex-column background-container">
           <v-container class="soundContainer" v-if="gameState != 'none'"
             ><v-row no-gutters align="center"
@@ -116,12 +117,19 @@
             </v-card>
           </v-overlay>
         </v-container></v-col
-      ><v-col cols="2"></v-col></v-row
-  ></v-container>
+      ></v-row
+    ></v-container
+  >
 </template>
 
 <script>
 export default {
+  props: {
+    isSmallScreen: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       buttonText: "Start",
@@ -297,9 +305,5 @@ export default {
   padding: 20px;
   border-radius: 8px;
   margin: 20px;
-}
-
-.textColumn {
-  padding-right: 56px !important;
 }
 </style>

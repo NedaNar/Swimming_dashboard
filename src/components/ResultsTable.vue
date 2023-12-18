@@ -1,72 +1,52 @@
 <template>
-  <v-container class="mb-5">
-    <v-row no-gutters
-      ><v-col cols="1"></v-col>
-      <v-col cols="10"><v-divider></v-divider></v-col>
-      <v-col cols="1"></v-col
-    ></v-row>
-    <v-row no-gutters style="height: 32px"
-      ><v-col cols="1"></v-col>
-      <v-col cols="1" class="d-flex align-center ml-1">Lane</v-col>
-      <v-col cols="7"></v-col>
-      <v-col cols="1" class="d-flex justify-center align-center">Time</v-col>
-      <v-col cols="1" class="d-flex justify-center align-center">Place</v-col>
-      <v-col cols="1"></v-col
-    ></v-row>
-    <v-row no-gutters
-      ><v-col cols="1"></v-col>
-      <v-col cols="10"><v-divider></v-divider></v-col>
-      <v-col cols="1"></v-col
-    ></v-row>
-    <v-row no-gutters class="mt-1">
-      <v-col cols="1"></v-col>
-      <v-col style="flex: 0 0 60px">
-        <v-table class="table ml-2">
-          <tbody>
-            <tr v-for="lane in lanes" :key="lane" class="table-row">
-              <td class="table-cell no-borders text-left">{{ lane }}</td>
-            </tr>
-          </tbody>
-        </v-table>
-      </v-col>
-      <v-col>
-        <SwimmingPool />
-      </v-col>
-      <v-col cols="1">
-        <v-table class="table">
-          <tbody>
-            <tr v-for="result in results" :key="result" class="table-row">
-              <td class="table-cell no-borders">
-                {{
-                  result != null
-                    ? result.time != null && result.distance == distance
-                      ? result.time
-                      : "-"
-                    : ""
-                }}
-              </td>
-            </tr>
-          </tbody>
-        </v-table>
-      </v-col>
-      <v-col cols="1">
-        <v-table class="table">
-          <tbody>
-            <tr v-for="result in results" :key="result" class="table-row">
-              <td class="table-cell no-borders">
-                {{
-                  result != null
-                    ? result.place != null && result.distance == distance
-                      ? result.place
-                      : "-"
-                    : ""
-                }}
-              </td>
-            </tr>
-          </tbody>
-        </v-table>
-      </v-col>
-      <v-col cols="1"></v-col> </v-row
+  <v-container height="auto">
+    <v-table class="pool-table">
+      <thead class="header-row">
+        <tr class="table-row">
+          <td class="header-cell text-center">Lane</td>
+          <td class="header-cell text-left"></td>
+          <td class="header-cell text-center">Time</td>
+          <td class="header-cell text-center">Place</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(lane, index) in lanes" :key="index" class="table-row">
+          <td class="table-cell text-center no-borders">
+            {{ lanes[index] }}
+          </td>
+          <td
+            width="680"
+            class="table-cell text-left no-borders"
+            style="vertical-align: top"
+          >
+            <swimming-pool v-if="index == 0" />
+          </td>
+          <td class="table-cell text-center no-borders">
+            {{
+              results[index] != null &&
+              results[index].time != null &&
+              results[index].distance == distance
+                ? results[index].time
+                : "-"
+            }}
+          </td>
+          <td class="table-cell text-center no-borders">
+            {{
+              results[index] != null &&
+              results[index].place != null &&
+              results[index].distance == distance
+                ? results[index].place
+                : "-"
+            }}
+          </td>
+        </tr>
+        <tr>
+          <td class="table-cell text-center no-borders"></td>
+          <td class="table-cell text-left no-borders"></td>
+          <td class="table-cell text-center no-borders"></td>
+          <td class="table-cell text-center no-borders"></td>
+        </tr>
+      </tbody> </v-table
   ></v-container>
 </template>
 
@@ -100,11 +80,9 @@ export default {
 </script>
 
 <style>
-.table {
-  width: 100%;
-}
 .table-row {
   background-color: #f5f5f5;
+  height: 48px !important;
 }
 .table-cell {
   font-size: 16px;
@@ -114,6 +92,10 @@ export default {
 }
 .no-borders {
   padding: 0px !important;
-  border: none !important;
+  border-bottom: none !important;
+}
+.pool-table {
+  background-color: #f5f5f5 !important;
+  width: 1200px !important;
 }
 </style>

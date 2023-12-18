@@ -4,7 +4,9 @@
       <v-container>
         <template v-for="lane in 10" :key="lane">
           <v-row class="row" no-gutters align="center">
-            <p class="name overlap">{{ infoStore.getNameByLane(lane - 1) }}</p>
+            <p class="name overlap">
+              {{ infoStore.getNameByLane(lane - 1) }}
+            </p>
             <img
               v-if="!infoStore.isSwimmer(lane - 1)"
               :src="infoStore.getFlagByLane(lane - 1)"
@@ -19,6 +21,14 @@
           </v-row>
         </template>
       </v-container>
+    </div>
+    <div
+      v-if="isRecordVisible"
+      :style="{ marginLeft: recordMargin }"
+      class="overlap"
+    >
+      <div class="line-green"></div>
+      <p :style="{ marginLeft: '-10px' }" class="text-green">WR</p>
     </div>
   </div>
 
@@ -85,7 +95,6 @@
                     />
                   </td>
                 </tr>
-                <v-divider></v-divider>
               </tbody>
             </v-table>
           </v-card-text>
