@@ -67,7 +67,7 @@
                 >
                 <v-row no-gutters>
                   <p class="ml-2 mt-1">
-                    Any movement after the official says “take your mark” can be
+                    Any movement after the “Take your mark” signal can be
                     considered a false start.
                   </p></v-row
                 ></v-col
@@ -109,7 +109,7 @@
                   :src="dialogContent.imageSrc"
                   :max-width="dialogContent.width"
                   :style="{ margin: 'auto' }"
-                  class="mb-4"
+                  class="mb-2"
                 ></v-img>
                 <p class="dialogTitle">{{ dialogContent.title }}</p>
                 <p>{{ dialogContent.paragraph }}</p>
@@ -203,7 +203,7 @@ export default {
       this.openOverlay({
         title: "You were disqualified!",
         imageSrc: "./src/components/images/dsq.png",
-        width: "128px",
+        width: "240px",
         paragraph: "Don’t worry, you can always try again.",
       });
     },
@@ -221,8 +221,8 @@ export default {
         title: `Your reaction time - ${this.formatElapsedTime(
           this.elapsedTime
         )} s`,
-        imageSrc: "./src/components/images/goblet.png",
-        width: "86px",
+        imageSrc: "./src/components/images/win.png",
+        width: "240px",
         paragraph: paragraph,
       });
     },
@@ -244,14 +244,17 @@ export default {
 </script>
 
 <style>
+.mainContainer {
+  width: 1000px !important;
+}
 .close {
   margin: 0px !important;
 }
 .dialog {
   border-radius: 16px !important;
   background-color: #f5f5f5 !important;
-  padding: 24px !important;
-  max-width: 400px;
+  padding: 16px 36px !important;
+  max-width: 480px;
 }
 .dialogTitle {
   font-weight: bold;
@@ -286,6 +289,7 @@ export default {
   margin-bottom: 16px;
 }
 .background-container {
+  width: 480px !important;
   min-height: 328px;
   background-image: url("./src/components/images/bg.png");
   height: 100%;
