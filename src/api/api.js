@@ -26,6 +26,7 @@ async function handleResponse(response) {
       `API request failed with status ${response.status}: ${errorMessage}`
     );
   }
+  
   const data = await response.json();
   return data;
 }

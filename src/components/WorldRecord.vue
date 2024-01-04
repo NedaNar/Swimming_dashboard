@@ -51,6 +51,6 @@ export default {
 }
 
 .time-text {
-  margin-left: 40px;
+  margin-left: 14px;
 }
 </style>

@@ -1,6 +1,11 @@
 <template>
-  <v-container class="mainContainer mt-5"
-    ><v-row no-gutters
+  <v-container class="mainContainer mt-5">
+    <audio id="shortAudio" src="./src/components/sounds/short.mp3"></audio>
+    <audio id="longAudio" src="./src/components/sounds/long.mp3"></audio>
+    <audio id="marksAudio" src="./src/components/sounds/marks.mp3"></audio>
+    <audio id="hornAudio" src="./src/components/sounds/horn.mp3"></audio>
+
+    <v-row no-gutters
       ><v-col
         :cols="!isSmallScreen ? auto : 12"
         :class="{ 'pr-5': !isSmallScreen }"
@@ -16,7 +21,7 @@
           </p></v-row
         ><v-row no-gutters
           ><p class="paragraph">
-            Every swimming race starts the same way: with the sound of a horn.
+            Every swimming race starts the same way - with the sound of a horn.
           </p></v-row
         ><v-row no-gutters
           ><p class="paragraph">
@@ -35,17 +40,24 @@
 
       <v-col :cols="!isSmallScreen ? auto : 12">
         <v-container class="d-flex flex-column background-container">
-          <v-container class="soundContainer" v-if="gameState != 'none'"
+          <v-container class="soundContainer"
             ><v-row no-gutters align="center"
-              ><v-col cols="1"
+              ><v-col cols="auto"
                 ><v-img
-                  src="./src/components/images/sound.png"
-                  max-width="24"
+                  :src="
+                    gameState == 'none'
+                      ? './src/components/images/sound.png'
+                      : './src/components/images/wave.png'
+                  "
+                  width="20"
+                  class="mr-3"
                 ></v-img></v-col
-              ><v-col cols="11"
+              ><v-col cols="auto"
                 ><p
-                  :class="{ 'font-weight-bold': gameState === 'start' }"
-                  class="ml-2"
+                  :class="{
+                    'font-weight-bold': gameState == 'start',
+                  }"
+                  style="font-size: 14px"
                 >
                   {{ soundText }}
                 </p></v-col
@@ -60,17 +72,14 @@
                   max-width="24"
                 ></v-img></v-col
               ><v-col cols="11">
-                <v-row no-gutters
-                  ><p class="ml-2">
-                    Do NOT release the button until you hear a horn.
-                  </p></v-row
-                >
-                <v-row no-gutters>
-                  <p class="ml-2 mt-1">
-                    Any movement after the “Take your mark” signal can be
-                    considered a false start.
-                  </p></v-row
-                ></v-col
+                <p class="ml-2">
+                  <span style="font-weight: bold"
+                    >Hold the button until you hear the horn.</span
+                  >
+                  <br />
+                  Any movement after this signal can be considered a false
+                  start.
+                </p></v-col
               ></v-row
             ></v-container
           >
@@ -79,14 +88,7 @@
             v-if="gameState != 'shortWhistles'"
             @click="nextStep"
             @mousedown="startTimer"
-            prepend-icon="mdi-play"
             class="mainButton"
-            ><template v-slot:prepend>
-              <v-icon
-                v-if="gameState == 'none'"
-                color="white"
-                class="play"
-              ></v-icon> </template
             >{{ buttonText }}</v-btn
           >
 
@@ -133,7 +135,7 @@ export default {
   data() {
     return {
       buttonText: "Start",
-      soundText: "",
+      soundText: "Sound ON for optimal experience",
       gameState: "none",
       startTime: 0,
       elapsedTime: 0,
@@ -175,21 +177,27 @@ export default {
 
       this.timerId = setTimeout(() => {
         this.startTime = Date.now();
-        this.soundText = "*Horn*";
-        this.gameState = "start";
-      }, 1500);
+        this.playAudio("hornAudio");
+        setTimeout(() => {
+          this.soundText = "Horn";
+          this.gameState = "start";
+        }, 200);
+      }, 2500);
     },
     setLongWhistleState() {
-      this.soundText = "*Short whistles*";
+      this.playAudio("shortAudio");
+      this.soundText = "Short whistles";
       this.gameState = "shortWhistles";
 
       setTimeout(() => {
-        this.soundText = "*Long whistle*";
+        this.playAudio("longAudio");
+        this.soundText = "Long whistle";
         this.buttonText = "Get onto the block";
         this.gameState = "longWhistle";
-      }, 1500);
+      }, 2000);
     },
     setTakeYourMarkState() {
+      this.playAudio("marksAudio");
       this.soundText = "Take your mark!";
       this.buttonText = "Hold start position";
       this.gameState = "takeYourMark";
@@ -212,15 +220,13 @@ export default {
 
       let paragraph;
       if (this.elapsedTime < 600)
-        paragraph = "Good job! Your result is way better than average.";
+        paragraph = "Wow! Your reaction time is amazing!";
       else if (this.elapsedTime >= 600 && this.elapsedTime <= 700)
         paragraph = "Nice! You have an average reaction time";
-      else paragraph = "Your reaction is not your biggest strength :)";
+      else paragraph = "Good job, but there's always room for improvement!";
 
       this.openOverlay({
-        title: `Your reaction time - ${this.formatElapsedTime(
-          this.elapsedTime
-        )} s`,
+        title: `Reaction time - ${this.formatElapsedTime(this.elapsedTime)} s`,
         imageSrc: "./src/components/images/win.png",
         width: "240px",
         paragraph: paragraph,
@@ -228,6 +234,7 @@ export default {
     },
     openOverlay(content) {
       this.gameState = "none";
+      this.soundText = "Sound ON for optimal experience";
       this.buttonText = "Start";
 
       this.dialogContent = content;
@@ -238,6 +245,10 @@ export default {
       let remainingMilliseconds = Math.ceil((milliseconds % 1000) / 10);
 
       return `${seconds}.${remainingMilliseconds}`;
+    },
+    playAudio(name) {
+      var audioElement = document.getElementById(name);
+      audioElement.play();
     },
   },
 };
@@ -261,13 +272,13 @@ export default {
   font-size: 24px;
 }
 .warning {
-  background-color: #ffebf1;
-  border-radius: 8px;
+  background-color: rgba(245, 245, 245, 0.9);
+  border-radius: 4px;
 }
 .soundContainer {
-  border-radius: 8px;
-  background-color: #f5f5f5;
-  font-size: 20px !important;
+  border-radius: 4px;
+  background-color: rgba(245, 245, 245, 0.9);
+  font-size: 16px !important;
   padding: 12px 16px !important;
 }
 .play {
@@ -284,6 +295,7 @@ export default {
   padding: 12px 32px !important;
   text-transform: none !important;
   box-shadow: none !important;
+  min-width: 200px !important;
 }
 .paragraph {
   margin-bottom: 16px;

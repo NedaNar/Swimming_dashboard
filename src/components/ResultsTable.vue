@@ -3,10 +3,10 @@
     <v-table class="pool-table">
       <thead class="header-row">
         <tr class="table-row">
-          <td class="header-cell text-center">Lane</td>
-          <td class="header-cell text-left"></td>
-          <td class="header-cell text-center">Time</td>
-          <td class="header-cell text-center">Place</td>
+          <th class="header-cell text-center">Lane</th>
+          <th class="header-cell text-left"></th>
+          <th class="header-cell text-center">Time</th>
+          <th class="header-cell text-center">Place</th>
         </tr>
       </thead>
       <tbody>
@@ -96,6 +96,6 @@ export default {
 }
 .pool-table {
   background-color: #f5f5f5 !important;
-  width: 1200px !important;
+  width: 1000px !important;
 }
 </style>

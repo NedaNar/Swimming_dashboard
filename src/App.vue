@@ -59,7 +59,9 @@ export default {
             <v-row no-gutters>
               <MainEvent :isSmallScreen="isSmallScreen"
             /></v-row>
-            <v-row no-gutters> <ResultsTable /></v-row>
+            <v-row no-gutters>
+              <ResultsTable justify="center" align="center"
+            /></v-row>
             <v-row no-gutters> <Game :isSmallScreen="isSmallScreen" /></v-row
           ></v-container>
         </v-col>
@@ -77,7 +79,7 @@ export default {
             <v-row no-gutters>
               <MainEvent :isSmallScreen="isSmallScreen" />
             </v-row>
-            <v-row no-gutters>
+            <v-row no-gutters justify="center" align="center">
               <ResultsTable />
             </v-row>
             <v-row no-gutters>
