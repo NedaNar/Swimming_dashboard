@@ -8,7 +8,7 @@
     <v-row no-gutters
       ><v-col
         :cols="!isSmallScreen ? auto : 12"
-        :class="{ 'pr-5': !isSmallScreen }"
+        :class="{ 'pr-5': !isSmallScreen, 'mb-5': isSmallScreen }"
         ><v-row no-gutters
           ><p
             class="paragraph"

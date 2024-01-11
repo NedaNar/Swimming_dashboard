@@ -1,5 +1,5 @@
 <template>
-  <v-container height="auto">
+  <v-container height="auto" :style="{ 'max-width': '1020px' }">
     <v-table class="pool-table">
       <thead class="header-row">
         <tr class="table-row">
@@ -15,9 +15,12 @@
             {{ lanes[index] }}
           </td>
           <td
-            width="680"
             class="table-cell text-left no-borders"
-            style="vertical-align: top"
+            :style="{
+              'vertical-align': 'top',
+              'min-width': '680px',
+              width: '680px',
+            }"
           >
             <swimming-pool v-if="index == 0" />
           </td>

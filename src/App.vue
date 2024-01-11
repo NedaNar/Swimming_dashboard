@@ -1,5 +1,6 @@
 <script>
 import TopBar from "./components/TopBar.vue";
+import EventTopBar from "./components/EventTopBar.vue";
 import Swimmers from "./components/Swimmers.vue";
 import WorldRecord from "./components/WorldRecord.vue";
 import Schedule from "./components/Schedule.vue";
@@ -11,6 +12,7 @@ import Game from "./components/Game.vue";
 export default {
   components: {
     TopBar,
+    EventTopBar,
     Swimmers,
     WorldRecord,
     Schedule,
@@ -24,11 +26,13 @@ export default {
       isLargeScreen: true,
       isMediumScreen: false,
       isSmallScreen: false,
+      showEventTopBar: false,
     };
   },
   mounted() {
     this.checkScreenSize();
     window.addEventListener("resize", this.checkScreenSize);
+    window.addEventListener("scroll", this.handleScroll);
   },
   methods: {
     checkScreenSize() {
@@ -37,9 +41,13 @@ export default {
         window.innerWidth >= 700 && window.innerWidth < 1280;
       this.isSmallScreen = window.innerWidth < 700;
     },
+    handleScroll() {
+      this.showEventTopBar = window.scrollY > 100;
+    },
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.checkScreenSize);
+    window.removeEventListener("scroll", this.handleScroll);
   },
 };
 </script>
@@ -47,6 +55,7 @@ export default {
 <template>
   <v-app>
     <TopBar />
+    <EventTopBar :showEventTopBar="showEventTopBar" />
     <v-container fluid class="main" v-if="isLargeScreen">
       <v-row no-gutters>
         <v-col cols="9">
@@ -70,17 +79,15 @@ export default {
     <v-container fluid class="main" v-if="!isLargeScreen">
       <v-row no-gutters>
         <v-col cols="12">
-          <v-container fluid>
-            <v-row no-gutters>
-              <MainEvent :isSmallScreen="isSmallScreen" />
-            </v-row>
-            <v-row no-gutters justify="center" align="center">
-              <ResultsTable />
-            </v-row>
-            <v-row no-gutters>
-              <Game :isSmallScreen="isSmallScreen" />
-            </v-row>
-          </v-container>
+          <v-row no-gutters>
+            <MainEvent :isSmallScreen="isSmallScreen" />
+          </v-row>
+          <v-row no-gutters>
+            <ResultsTable justify="center" align="center" />
+          </v-row>
+          <v-row no-gutters>
+            <Game :isSmallScreen="isSmallScreen" />
+          </v-row>
         </v-col>
 
         <v-col

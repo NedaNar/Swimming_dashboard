@@ -5,7 +5,11 @@
   src: url("./src/components/fonts/Amiko-Bold.ttf") format("truetype");
   font-weight: bold;
 }
-
+@font-face {
+  font-family: "Amiko";
+  src: url("./src/components/fonts/Amiko-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+}
 @font-face {
   font-family: "Amiko";
   src: url("./src/components/fonts/Amiko-Regular.ttf") format("truetype");

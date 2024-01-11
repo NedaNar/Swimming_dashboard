@@ -44,11 +44,11 @@
             <v-card-title> {{ swimmer.name }} </v-card-title>
 
             <v-card-text :style="{ 'font-size': '16rem' }">
-              <v-row no-gutters class="mb-1" style="height: 24px">
-                <v-col cols="7"
+              <v-row no-gutters class="mb-1" style="min-height: 24px">
+                <v-col cols="6"
                   ><p :style="{ color: '#515151' }">Nationality</p></v-col
                 >
-                <v-col cols="5"
+                <v-col cols="6"
                   ><v-row no-gutters align="center">
                     <v-img
                       :src="swimmer.flag"
@@ -59,21 +59,21 @@
                   </v-row></v-col
                 >
               </v-row>
-              <v-row no-gutters style="height: 24px" class="mb-1" 
-                ><v-col cols="7"
+              <v-row no-gutters style="min-height: 24px" class="mb-1"
+                ><v-col cols="6"
                   ><p :style="{ color: '#515151' }">Date of birth</p></v-col
                 >
-                <v-col cols="5">
+                <v-col cols="6">
                   <p :style="{ color: '#000000' }">
                     {{ swimmer.date }}
                   </p>
                 </v-col>
               </v-row>
-              <v-row no-gutters style="height: 24px">
-                <v-col cols="7">
+              <v-row no-gutters style="min-height: 24px">
+                <v-col cols="6">
                   <p :style="{ color: '#515151' }">Personal best</p></v-col
                 >
-                <v-col cols="5">
+                <v-col cols="6">
                   <p :style="{ color: '#000000' }">{{ swimmer.pb }}</p>
                 </v-col>
               </v-row>
