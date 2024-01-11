@@ -7,8 +7,6 @@ import MedalTable from "./components/MedalTable.vue";
 import MainEvent from "./components/MainEvent.vue";
 import ResultsTable from "./components/ResultsTable.vue";
 import Game from "./components/Game.vue";
-import { useResultStore } from "@/stores/results";
-import { useInfoStore } from "@/stores/info";
 
 export default {
   components: {
@@ -23,9 +21,6 @@ export default {
   },
   data() {
     return {
-      resultStore: useResultStore(),
-      infoStore: useInfoStore(),
-      currentSecond: 0,
       isLargeScreen: true,
       isMediumScreen: false,
       isSmallScreen: false,
@@ -124,9 +119,5 @@ export default {
   margin-top: 91px;
   padding: 0px !important;
   width: 100%;
-}
-
-.gray-text {
-  color: red !important;
 }
 </style>

@@ -14,13 +14,13 @@
       </div>
     </v-row>
     <v-row no-gutters>
-      <p class="time-text">
+      <p :style="{ 'margin-left': '14px' }">
         <span
-          v-if="event.recordTime != null"
+          v-if="event.recordTime"
           :style="{ 'font-size': '16px' }"
           class="font-weight-bold"
-          >{{ event.recordTime[event.recordTime.length - 1].time }}
-        </span>
+          >{{ event.recordTime[event.recordTime.length - 1].time }}</span
+        >
         {{ event.recordDetails }}
       </p>
     </v-row>
@@ -48,9 +48,5 @@ export default {
 .wr {
   background-color: #d1e9f5;
   padding: 24px 32px 16px 32px !important;
-}
-
-.time-text {
-  margin-left: 14px;
 }
 </style>

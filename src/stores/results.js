@@ -27,7 +27,6 @@ export const useResultStore = defineStore("results", {
         const data = await api.get(SWIMMING_API_BASE_URL, "liveResults");
 
         this.liveResults = data.swimmers.map((swimmer) => {
-          console.log(swimmer);
           if (swimmer == null) return null;
           else if (
             swimmer.state &&
