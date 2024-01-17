@@ -51,11 +51,6 @@ export default {
   },
   created() {
     this.fetchEvent();
-
-    this.fetchEventState();
-    setInterval(() => {
-      this.fetchEventState();
-    }, 1000);
   },
   methods: {
     fetchEvent() {
@@ -92,7 +87,6 @@ export default {
     updateTimer() {
       const elapsedMilliseconds = performance.now() - this.startTime;
       this.time = this.formatTime(elapsedMilliseconds);
-      console.log(this.time);
     },
     formatTime(milliseconds) {
       const minutes = Math.floor(milliseconds / (60 * 1000));
